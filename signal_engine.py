@@ -2,12 +2,12 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # WaveTrend logic for VMC Cipher B
 #
-# Signal logic (final):
-#   BIG_GREEN  → bullish crossover with WT1 < -60
-#   BIG_RED    → ANY bearish crossover regardless of zone
-#   YELLOW_BUY → bullish crossover with WT1 between -60 and +40
+# Signal logic (corrected to match TradingView VMC Cipher B exactly):
+#   BIG_GREEN  → WT1 crosses above WT2, with WT1 < -60 (os_level)
+#   BIG_RED    → WT1 crosses below WT2, with WT1 > +40 (red_level)
+#   YELLOW_BUY → WT1 crosses above WT2, with -60 <= WT1 <= +40
 #
-# No other signal types exist in this system.
+# Crossover uses WT1 as the signal line (not WT2).
 # ─────────────────────────────────────────────────────────────────────────────
 
 import logging
@@ -69,14 +69,16 @@ def detect_signals(
     red_level: float = config.RED_LEVEL,
 ) -> pd.DataFrame:
     """
-    Three signals only:
+    Detects three signal types matching VMC Cipher B on TradingView exactly.
 
-    Bullish crossover (wt2 crosses above wt1):
-      WT1 < os_level (-60)               → big_green
-      os_level <= WT1 <= red_level (+40) → yellow_buy
+    Crossover definition (client-verified correct):
+        cross_above = (wt1_prev < wt2_prev) & (wt1_curr >= wt2_curr)  # Bullish: WT1 crosses above WT2
+        cross_below = (wt1_prev > wt2_prev) & (wt1_curr <= wt2_curr)  # Bearish: WT1 crosses below WT2
 
-    Bearish crossover (wt2 crosses below wt1):
-      ANY zone                           → big_red
+    Signal rules:
+        BIG_GREEN  → cross_above AND WT1 < os_level  (-60)
+        BIG_RED    → cross_below AND WT1 > red_level  (+40)
+        YELLOW_BUY → cross_above AND os_level <= WT1 <= red_level
     """
     df = df.copy()
 
@@ -85,18 +87,19 @@ def detect_signals(
     wt1_prev = df['wt1'].shift(1)
     wt2_prev = df['wt2'].shift(1)
 
-    # ── Crossover detection ───────────────────────────────────────────────
-    cross_above = (wt2_prev < wt1_prev) & (wt2_curr >= wt1_curr)
-    cross_below = (wt2_prev > wt1_prev) & (wt2_curr <= wt1_curr)
+    # ── Crossover detection (client-verified correct direction) ───────────
+    cross_above = (wt1_prev < wt2_prev) & (wt1_curr >= wt2_curr)  # Bullish: WT1 crosses above WT2
+    cross_below = (wt1_prev > wt2_prev) & (wt1_curr <= wt2_curr)  # Bearish: WT1 crosses below WT2
 
-    # ── Zone detection ────────────────────────────────────────────────────
-    in_green_zone  = wt1_curr < os_level
-    in_middle_zone = (wt1_curr >= os_level) & (wt1_curr <= red_level)
+    # ── Zone detection at crossover candle ────────────────────────────────
+    in_oversold_zone   = wt1_curr < os_level                                # below -60
+    in_middle_zone     = (wt1_curr >= os_level) & (wt1_curr <= red_level)  # -60 to +40
+    in_overbought_zone = wt1_curr > red_level                               # above +40
 
     # ── Signal assignment ─────────────────────────────────────────────────
-    df['big_green']  = cross_above & in_green_zone
+    df['big_green']  = cross_above & in_oversold_zone
     df['yellow_buy'] = cross_above & in_middle_zone
-    df['big_red']    = cross_below   # ALL bearish crossovers
+    df['big_red']    = cross_below & in_overbought_zone
 
     logger.debug(
         f"Signals detected over {len(df)} candles → "
@@ -113,7 +116,7 @@ def get_latest_signal(df: pd.DataFrame) -> dict | None:
 
     Priority:
         1. BIG_GREEN   — strongest bullish
-        2. BIG_RED     — all bearish
+        2. BIG_RED     — bearish (overbought zone only)
         3. YELLOW_BUY  — moderate bullish
 
     Returns None if no signal on the last closed candle.
@@ -166,7 +169,7 @@ def get_all_historical_signals(df: pd.DataFrame) -> pd.DataFrame:
     """
     mask = (
         df['big_green'] |
-        df['big_red'] |
+        df['big_red']   |
         df['yellow_buy']
     )
     signals = df[mask].copy()

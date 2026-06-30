@@ -4,10 +4,11 @@
 #
 # Three signal types only:
 #   BIG_GREEN  → bullish crossover below -60       → BUY
-#   BIG_RED    → any bearish crossover             → SELL
+#   BIG_RED    → bearish crossover above +40       → SELL
 #   YELLOW_BUY → bullish crossover between -60/+40 → BUY
 #
 # Timestamps shown in both UTC and Pacific Time (PT) via pytz.
+# Scan time shown separately from candle time.
 # ─────────────────────────────────────────────────────────────────────────────
 
 import json
@@ -171,6 +172,11 @@ class AlertManager:
         time_pst         = self._format_pacific(signal['timestamp'])
         asset_type_label = '📊 Stock' if signal.get('asset_type') == 'stock' else '🪙 Crypto'
 
+        # ── Scan time ─────────────────────────────────────────────────────
+        # scan_time is set in scanner.py as 'YYYY-MM-DD HH:MM UTC'
+        # Falls back to 'N/A' if somehow missing.
+        scan_time_utc = signal.get('scan_time', 'N/A')
+
         # ── Subject ───────────────────────────────────────────────────────
         subject = f"{emoji} {group_prefix} | {symbol} | {tf_label} | {action}"
 
@@ -189,6 +195,7 @@ VMC Cipher B + Divergences Alert
   WT1 Value        : {wt1}
   Candle Time (UTC): {time_utc}
   Candle Time (PT) : {time_pst}
+  Scan Time (UTC)  : {scan_time_utc}
 
   {urgency_note}
 
@@ -271,6 +278,12 @@ Automated alert from your VMC Cipher B Scanner.
       padding-right: 8px;
     }}
     td.val {{ color: #111; font-weight: 500; }}
+    td.scan-val {{
+      color: #888;
+      font-weight: 400;
+      font-size: 13px;
+      font-style: italic;
+    }}
     .urgency {{
       margin: 16px 0 0;
       padding: 12px 14px;
@@ -347,6 +360,10 @@ Automated alert from your VMC Cipher B Scanner.
         <tr>
           <td class="key">Candle Time (PT)</td>
           <td class="val">{time_pst}</td>
+        </tr>
+        <tr>
+          <td class="key">Scan Time (UTC)</td>
+          <td class="scan-val">{scan_time_utc}</td>
         </tr>
       </table>
 

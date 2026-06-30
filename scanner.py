@@ -6,8 +6,8 @@
 #   BUY  signals (BIG_GREEN, YELLOW_BUY) → Weekly (1w), Monthly (1M) only
 #   SELL signals (BIG_RED)               → 4H (4h), Daily (1d), Weekly (1w) only
 #
-# Additional 4H sell filter:
-#   BIG_RED on 4h only fires when WT1 > 50, otherwise suppressed
+# Big Red zone enforcement (WT1 > +40) is handled inside signal_engine.py.
+# No additional WT1 threshold check is needed here.
 # ─────────────────────────────────────────────────────────────────────────────
 
 import json
@@ -109,8 +109,8 @@ def _is_signal_allowed_on_timeframe(signal: dict, timeframe: str) -> bool:
     BUY  signals → Weekly (1w) and Monthly (1M) only
     SELL signals → 4H (4h), Daily (1d), Weekly (1w) only
 
-    Additional 4H sell rule:
-    SELL on 4h is suppressed unless WT1 > 50
+    Note: Big Red's WT1 > +40 zone requirement is enforced in
+    signal_engine.detect_signals(), not here.
 
     Returns True if signal should fire, False if suppressed.
     """
@@ -127,13 +127,6 @@ def _is_signal_allowed_on_timeframe(signal: dict, timeframe: str) -> bool:
         logger.debug(
             f"SELL signal suppressed on {timeframe} — "
             f"only fires on {SELL_TIMEFRAMES}"
-        )
-        return False
-
-    if direction == 'SELL' and timeframe == '4h' and signal.get('wt1', 0) <= 50:
-        logger.debug(
-            f"SELL signal suppressed on 4h — "
-            f"WT1={signal.get('wt1')} is not > 50"
         )
         return False
 
