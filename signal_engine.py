@@ -4,7 +4,7 @@
 #
 # Signal logic (corrected to match TradingView VMC Cipher B exactly):
 #   BIG_GREEN  → WT1 crosses above WT2, with WT1 < -60 (os_level)
-#   BIG_RED    → WT1 crosses below WT2, with WT1 > +40 (red_level)
+#   BIG_RED    → WT1 crosses below WT2 (all bearish crossovers)
 #   YELLOW_BUY → WT1 crosses above WT2, with -60 <= WT1 <= +40
 #
 # Crossover uses WT1 as the signal line (not WT2).
@@ -77,7 +77,7 @@ def detect_signals(
 
     Signal rules:
         BIG_GREEN  → cross_above AND WT1 < os_level  (-60)
-        BIG_RED    → cross_below AND WT1 > red_level  (+40)
+        BIG_RED    → cross_below (all bearish crossovers)
         YELLOW_BUY → cross_above AND os_level <= WT1 <= red_level
     """
     df = df.copy()
@@ -99,7 +99,7 @@ def detect_signals(
     # ── Signal assignment ─────────────────────────────────────────────────
     df['big_green']  = cross_above & in_oversold_zone
     df['yellow_buy'] = cross_above & in_middle_zone
-    df['big_red']    = cross_below & in_overbought_zone
+    df['big_red']    = cross_below
 
     logger.debug(
         f"Signals detected over {len(df)} candles → "
