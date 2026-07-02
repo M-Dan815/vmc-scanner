@@ -74,15 +74,15 @@ GMAIL_RECIPIENT = os.getenv("GMAIL_RECIPIENT", "jn.shantnu@gmail.com")
 # ─────────────────────────────────────────────────────────────────────────────
 # SCHEDULER TIMING (UTC)
 # ─────────────────────────────────────────────────────────────────────────────
-SCAN_4H_MINUTE  = 15
+SCAN_4H_MINUTE  = 10
 SCAN_1D_HOUR    = 0
-SCAN_1D_MINUTE  = 5
+SCAN_1D_MINUTE  = 10
 SCAN_1W_DOW     = 'mon'
 SCAN_1W_HOUR    = 0
 SCAN_1W_MINUTE  = 10
 SCAN_1M_DAY     = 1
 SCAN_1M_HOUR    = 0
-SCAN_1M_MINUTE  = 15
+SCAN_1M_MINUTE  = 10
 
 # ─────────────────────────────────────────────────────────────────────────────
 # API RATE LIMITING
