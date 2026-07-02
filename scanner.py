@@ -49,16 +49,16 @@ def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
     if not wl_path.exists():
         logger.warning(
             f"watchlist.json not found. "
-            f"Falling back to config.py CRYPTO_WATCHLIST."
+            f"Falling back to config.py BINANCE_WATCHLIST."
         )
         return [
             {
                 'symbol': s,
                 'label': s,
-                'asset_type': 'crypto',
+                'asset_type': 'binance',
                 'group': 'keep_an_eye',
             }
-            for s in config.CRYPTO_WATCHLIST
+            for s in config.BINANCE_WATCHLIST
         ]
 
     with open(wl_path, 'r') as f:
@@ -66,13 +66,13 @@ def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
 
     assets = []
 
-    if config.ENABLE_CRYPTO:
+    if config.ENABLE_BINANCE:
         for entry in data.get('holdings', []):
             if entry.get('active', False):
                 assets.append({
                     'symbol':     entry['symbol'],
                     'label':      entry.get('label', entry['symbol']),
-                    'asset_type': entry.get('asset_type', 'crypto'),
+                    'asset_type': entry.get('asset_type', 'binance'),
                     'group':      'holdings',
                 })
 
@@ -81,7 +81,7 @@ def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
                 assets.append({
                     'symbol':     entry['symbol'],
                     'label':      entry.get('label', entry['symbol']),
-                    'asset_type': entry.get('asset_type', 'crypto'),
+                    'asset_type': entry.get('asset_type', 'binance'),
                     'group':      'keep_an_eye',
                 })
 
