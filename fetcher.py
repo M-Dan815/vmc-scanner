@@ -224,19 +224,19 @@ def fetch_yahoo_ohlcv(
 def fetch_ohlcv(
     symbol: str,
     timeframe: str,
-    asset_type: str = 'crypto',
+    asset_type: str = 'binance',
     limit: int = config.CANDLE_LIMIT
 ) -> pd.DataFrame | None:
     """
     Unified fetcher with retry logic.
-    Routes to Binance.US (crypto), Coinbase, or Yahoo Finance (stocks).
+    Routes to Binance.US (binance), Coinbase (coinbase), or Yahoo Finance (stock).
     Unsupported Coinbase timeframes are skipped cleanly without retrying.
     """
     for attempt in range(1, config.MAX_RETRIES + 1):
         try:
             if asset_type == 'coinbase':
                 df = fetch_coinbase_ohlcv(symbol, timeframe, limit)
-            elif asset_type == 'crypto':
+            elif asset_type == 'binance':
                 df = fetch_binance_ohlcv(symbol, timeframe, limit)
             elif asset_type == 'stock':
                 df = fetch_yahoo_ohlcv(symbol, timeframe, limit)

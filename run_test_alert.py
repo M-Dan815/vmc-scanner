@@ -15,7 +15,7 @@ test_signals = [
     {
         'symbol':       'ALGOUSDT',
         'label':        'Algorand',
-        'asset_type':   'crypto',
+        'asset_type':   'binance',
         'group':        'holdings',
         'timeframe':    '1w',
         'tf_label':     'Weekly',
@@ -30,7 +30,7 @@ test_signals = [
     {
         'symbol':       'BTCUSDT',
         'label':        'Bitcoin',
-        'asset_type':   'crypto',
+        'asset_type':   'binance',
         'group':        'keep_an_eye',
         'timeframe':    '1w',
         'tf_label':     'Weekly',
@@ -45,7 +45,7 @@ test_signals = [
     {
         'symbol':       'AVAXUSDT',
         'label':        'Avalanche',
-        'asset_type':   'crypto',
+        'asset_type':   'binance',
         'group':        'keep_an_eye',
         'timeframe':    '1M',
         'tf_label':     'Monthly',

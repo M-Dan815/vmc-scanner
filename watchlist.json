@@ -2,42 +2,223 @@
   "_comment": "Edit this file to add/remove assets. Set active to false to disable. Move assets between holdings and keep_an_eye anytime. Restart scanner after changes.",
 
   "holdings": [
-    {"symbol": "ALGOUSDT",  "label": "Algorand",  "active": true, "asset_type": "crypto"},
-    {"symbol": "WIFUSDT",   "label": "dogwifhat", "active": true, "asset_type": "crypto"},
-    {"symbol": "SUSHIUSDT", "label": "SushiSwap", "active": true, "asset_type": "crypto"},
-    {"symbol": "PEPEUSDT",  "label": "Pepe",      "active": true, "asset_type": "crypto"},
-    {"symbol": "AERO-USD",  "label": "Aerodrome", "active": true, "asset_type": "coinbase"},
-    {"symbol": "AAVEUSDT",  "label": "Aave",      "active": true, "asset_type": "crypto"},
-    {"symbol": "FLR-USD",   "label": "Flare",     "active": true, "asset_type": "coinbase"}
+    {
+      "symbol": "ADAUSDT",
+      "label": "Cardano",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "label": "Avalanche",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "label": "Solana",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "label": "Ethereum",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "label": "Chainlink",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "label": "Sui",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "XRPUSDT",
+      "label": "XRP",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "UNIUSDT",
+      "label": "Uniswap",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "label": "Dogecoin",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "ALGOUSDT",
+      "label": "Algorand",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "WIFUSDT",
+      "label": "dogwifhat",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "SUSHIUSDT",
+      "label": "SushiSwap",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "label": "Pepe",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "AERO-USD",
+      "label": "Aerodrome",
+      "active": true,
+      "asset_type": "coinbase"
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "label": "Aave",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "FLR-USD",
+      "label": "Flare",
+      "active": true,
+      "asset_type": "coinbase"
+    }
   ],
 
   "keep_an_eye": [
-    {"symbol": "XLMUSDT",   "label": "Stellar",   "active": true, "asset_type": "crypto"},
-    {"symbol": "HBARUSDT",  "label": "Hedera",    "active": true, "asset_type": "crypto"},
-    {"symbol": "BTCUSDT",   "label": "Bitcoin",   "active": true, "asset_type": "crypto"},
-    {"symbol": "ETHUSDT",   "label": "Ethereum",  "active": true, "asset_type": "crypto"},
-    {"symbol": "DOGEUSDT",  "label": "Dogecoin",  "active": true, "asset_type": "crypto"},
-    {"symbol": "ADAUSDT",   "label": "Cardano",   "active": true, "asset_type": "crypto"},
-    {"symbol": "AVAXUSDT",  "label": "Avalanche", "active": true, "asset_type": "crypto"},
-    {"symbol": "SOLUSDT",   "label": "Solana",    "active": true, "asset_type": "crypto"},
-    {"symbol": "LINKUSDT",  "label": "Chainlink", "active": true, "asset_type": "crypto"},
-    {"symbol": "SUIUSDT",   "label": "Sui",       "active": true, "asset_type": "crypto"},
-    {"symbol": "XRPUSDT",   "label": "XRP",       "active": true, "asset_type": "crypto"},
-    {"symbol": "UNIUSDT",   "label": "Uniswap",   "active": true, "asset_type": "crypto"}
+    {
+      "symbol": "HBARUSDT",
+      "label": "Hedera",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "XLMUSDT",
+      "label": "Stellar",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "label": "Bitcoin",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "label": "Bittensor",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "HNTUSDT",
+      "label": "Helium",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "label": "Ondo",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "HYPEUSDT",
+      "label": "Hyperliquid",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "INJUSDT",
+      "label": "Injective",
+      "active": true,
+      "asset_type": "binance"
+    },
+    {
+      "symbol": "NEARUSDT",
+      "label": "NEAR Protocol",
+      "active": true,
+      "asset_type": "binance"
+    }
   ],
 
   "stocks": [
-    {"symbol": "ADSK",  "label": "Autodesk",  "active": false, "asset_type": "stock"},
-    {"symbol": "META",  "label": "Meta",       "active": false, "asset_type": "stock"},
-    {"symbol": "ADBE",  "label": "Adobe",      "active": false, "asset_type": "stock"},
-    {"symbol": "TSLA",  "label": "Tesla",      "active": false, "asset_type": "stock"},
-    {"symbol": "CRM",   "label": "Salesforce", "active": false, "asset_type": "stock"},
-    {"symbol": "COIN",  "label": "Coinbase",   "active": false, "asset_type": "stock"},
-    {"symbol": "AAPL",  "label": "Apple",      "active": false, "asset_type": "stock"},
-    {"symbol": "NVDA",  "label": "NVIDIA",     "active": false, "asset_type": "stock"},
-    {"symbol": "AMD",   "label": "AMD",        "active": false, "asset_type": "stock"},
-    {"symbol": "INTC",  "label": "Intel",      "active": false, "asset_type": "stock"},
-    {"symbol": "IBM",   "label": "IBM",        "active": false, "asset_type": "stock"},
-    {"symbol": "PYPL",  "label": "PayPal",     "active": false, "asset_type": "stock"}
+    {
+      "symbol": "ADSK",
+      "label": "Autodesk",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "META",
+      "label": "Meta",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "ADBE",
+      "label": "Adobe",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "TSLA",
+      "label": "Tesla",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "CRM",
+      "label": "Salesforce",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "COIN",
+      "label": "Coinbase",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "AAPL",
+      "label": "Apple",
+      "active": false,
+      "asset_type": "stock"
+    },
+    {
+      "symbol": "NVDA",
+      "label": "NVIDIA",
+      "active": false,
+      "asset_type": "stock"
+    },
+    { "symbol": "AMD", "label": "AMD", "active": false, "asset_type": "stock" },
+    {
+      "symbol": "INTC",
+      "label": "Intel",
+      "active": false,
+      "asset_type": "stock"
+    },
+    { "symbol": "IBM", "label": "IBM", "active": false, "asset_type": "stock" },
+    {
+      "symbol": "PYPL",
+      "label": "PayPal",
+      "active": false,
+      "asset_type": "stock"
+    }
   ]
 }

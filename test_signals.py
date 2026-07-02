@@ -33,7 +33,7 @@ SIGNAL_EMOJI = {
 }
 
 
-def test_single(symbol: str, timeframe: str, asset_type: str = 'crypto'):
+def test_single(symbol: str, timeframe: str, asset_type: str = 'binance'):
     print(f"\n{SEPARATOR}")
     print(f"  {symbol}  |  {config.TIMEFRAME_LABELS.get(timeframe, timeframe)}")
     print(SEPARATOR)
@@ -162,10 +162,10 @@ def main():
         help='Timeframe'
     )
     parser.add_argument(
-        '--type', default='crypto',
-        choices=['crypto', 'coinbase', 'stock'],
+        '--type', default='binance',
+        choices=['binance', 'coinbase', 'stock'],
         dest='asset_type',
-        help='Asset type'
+        help='Asset type: binance (default), coinbase, or stock'
     )
     parser.add_argument(
         '--all', action='store_true',

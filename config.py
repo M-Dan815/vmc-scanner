@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ─────────────────────────────────────────────────────────────────────────────
-# CRYPTO WATCHLIST (fallback if watchlist.json not found)
+# BINANCE WATCHLIST (fallback if watchlist.json not found)
 # ─────────────────────────────────────────────────────────────────────────────
-CRYPTO_WATCHLIST = [
+BINANCE_WATCHLIST = [
     "ADAUSDT", "AVAXUSDT", "SOLUSDT", "ETHUSDT", "LINKUSDT",
     "SUIUSDT", "XRPUSDT", "UNIUSDT", "DOGEUSDT", "ALGOUSDT",
     "WIFUSDT", "SUSHIUSDT", "PEPEUSDT", "AAVEUSDT", "XLMUSDT",
@@ -29,8 +29,8 @@ STOCK_WATCHLIST = [
 # ─────────────────────────────────────────────────────────────────────────────
 # ACTIVE MODES
 # ─────────────────────────────────────────────────────────────────────────────
-ENABLE_CRYPTO = os.getenv("ENABLE_CRYPTO", "true").lower() == "true"
-ENABLE_STOCKS = os.getenv("ENABLE_STOCKS", "false").lower() == "true"
+ENABLE_BINANCE = os.getenv("ENABLE_BINANCE", "true").lower() == "true"
+ENABLE_STOCKS  = os.getenv("ENABLE_STOCKS", "false").lower() == "true"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # TIMEFRAMES

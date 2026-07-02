@@ -94,7 +94,7 @@ def print_banner(scanner: VMCScanner):
     logger.info(f"    Holdings     : {holdings_count}")
     logger.info(f"    Keep an Eye  : {watch_count}")
     logger.info(f"  Timeframes     : {', '.join(config.TIMEFRAMES)}")
-    logger.info(f"  Crypto enabled : {config.ENABLE_CRYPTO}")
+    logger.info(f"  Binance enabled: {config.ENABLE_BINANCE}")
     logger.info(f"  Stocks enabled : {config.ENABLE_STOCKS}")
     logger.info(f"  Data sources   : Binance.US + Coinbase")
     logger.info(f"  OS Level       : {config.OS_LEVEL} (Big Green below this)")
@@ -103,16 +103,15 @@ def print_banner(scanner: VMCScanner):
     logger.info(f"  Log file       : {config.LOG_FILE}")
     logger.info("=" * 58)
     logger.info("  Scan schedule (UTC):")
-    logger.info(f"    4-Hour  → HH:{config.SCAN_4H_MINUTE:02d} after each 4H close")
-    logger.info(f"    Daily   → {config.SCAN_1D_HOUR:02d}:{config.SCAN_1D_MINUTE:02d} daily")
+    logger.info(f"    4-Hour  → 00:15, 04:15, 08:15, 12:15, 16:15, 20:15")
+    logger.info(f"    Daily   → {config.SCAN_1D_HOUR:02d}:{config.SCAN_1D_MINUTE:02d}")
     logger.info(f"    Weekly  → Monday {config.SCAN_1W_HOUR:02d}:{config.SCAN_1W_MINUTE:02d}")
     logger.info(f"    Monthly → 1st of month {config.SCAN_1M_HOUR:02d}:{config.SCAN_1M_MINUTE:02d}")
     logger.info("=" * 58)
     logger.info("  Signal logic:")
     logger.info(f"    🟢 Big Green  → bullish crossover with WT1 < {config.OS_LEVEL}")
-    logger.info(f"    🔴 Big Red    → bearish crossover with WT1 > {config.RED_LEVEL}")
-    logger.info(f"    🟡 Yellow BUY → bullish crossover with WT1 between {config.OS_LEVEL} and {config.RED_LEVEL}")
-    logger.info(f"    🟡 Yellow SELL→ bearish crossover with WT1 between {config.OS_LEVEL} and {config.RED_LEVEL}")
+    logger.info(f"    🔴 Big Red    → bearish crossover (all zones)")
+    logger.info(f"    🟡 Yellow BUY → bullish crossover with WT1 between {config.OS_LEVEL} and +{config.RED_LEVEL}")
     logger.info("=" * 58)
     logger.info("  Scanner is live. Waiting for candle closes...")
     logger.info("  Press Ctrl+C to stop.")
@@ -132,7 +131,9 @@ def main():
 
     scheduler = BlockingScheduler(timezone='UTC')
 
-    # 4-Hour
+    # 4-Hour — fires at :15 after each 4H candle close
+    # Candle closes: 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC
+    # Scan fires at: 00:15, 04:15, 08:15, 12:15, 16:15, 20:15 UTC
     scheduler.add_job(
         func    = make_scan_job(scanner, '4h'),
         trigger = CronTrigger(

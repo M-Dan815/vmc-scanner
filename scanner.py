@@ -5,9 +5,6 @@
 # Timeframe filters (final):
 #   BUY  signals (BIG_GREEN, YELLOW_BUY) → Weekly (1w), Monthly (1M) only
 #   SELL signals (BIG_RED)               → 4H (4h), Daily (1d), Weekly (1w) only
-#
-# Big Red zone enforcement (WT1 > +40) is handled inside signal_engine.py.
-# No additional WT1 threshold check is needed here.
 # ─────────────────────────────────────────────────────────────────────────────
 
 import json
@@ -33,22 +30,22 @@ SELL_TIMEFRAMES = {'4h', '1d', '1w'}
 def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
     """
     Loads active assets from watchlist.json.
-    Falls back to config.py CRYPTO_WATCHLIST if file not found.
+    Falls back to config.py BINANCE_WATCHLIST if file not found.
     """
     wl_path = Path(filepath)
     if not wl_path.exists():
         logger.warning(
             f"watchlist.json not found. "
-            f"Falling back to config.py CRYPTO_WATCHLIST."
+            f"Falling back to config.py BINANCE_WATCHLIST."
         )
         return [
             {
                 'symbol':     s,
                 'label':      s,
-                'asset_type': 'crypto',
+                'asset_type': 'binance',
                 'group':      'keep_an_eye',
             }
-            for s in config.CRYPTO_WATCHLIST
+            for s in config.BINANCE_WATCHLIST
         ]
 
     with open(wl_path, 'r') as f:
@@ -56,13 +53,13 @@ def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
 
     assets = []
 
-    if config.ENABLE_CRYPTO:
+    if config.ENABLE_BINANCE:
         for entry in data.get('holdings', []):
             if entry.get('active', False):
                 assets.append({
                     'symbol':     entry['symbol'],
                     'label':      entry.get('label', entry['symbol']),
-                    'asset_type': entry.get('asset_type', 'crypto'),
+                    'asset_type': entry.get('asset_type', 'binance'),
                     'group':      'holdings',
                 })
 
@@ -71,7 +68,7 @@ def load_watchlist(filepath: str = 'watchlist.json') -> list[dict]:
                 assets.append({
                     'symbol':     entry['symbol'],
                     'label':      entry.get('label', entry['symbol']),
-                    'asset_type': entry.get('asset_type', 'crypto'),
+                    'asset_type': entry.get('asset_type', 'binance'),
                     'group':      'keep_an_eye',
                 })
 
@@ -108,9 +105,6 @@ def _is_signal_allowed_on_timeframe(signal: dict, timeframe: str) -> bool:
 
     BUY  signals → Weekly (1w) and Monthly (1M) only
     SELL signals → 4H (4h), Daily (1d), Weekly (1w) only
-
-    Note: Big Red's WT1 > +40 zone requirement is enforced in
-    signal_engine.detect_signals(), not here.
 
     Returns True if signal should fire, False if suppressed.
     """
